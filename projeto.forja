@@ -1,0 +1,6 @@
+# Projeto da Forja Engine
+nome = Meu Jogo
+principal = principal.ign
+cena = cenas/principal.cena
+largura = 640
+altura = 360

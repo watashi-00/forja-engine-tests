@@ -1,0 +1,20 @@
+{
+  "fundo": "#1e2433",
+  "camera_suavidade": 0.15000000596046448,
+  "gravidade": 1500,
+  "mundo_largura": 640,
+  "mundo_altura": 360,
+  "objetos": [
+    {
+      "nome": "Retângulo",
+      "tipo": "retangulo",
+      "x": 320,
+      "y": 160,
+      "largura": 32,
+      "altura": 32,
+      "cor": "#81c784",
+      "visivel": true,
+      "script": "scripts/rectangle.ign"
+    }
+  ]
+}

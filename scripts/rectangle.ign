@@ -1,0 +1,26 @@
+# Script do objeto "Retângulo".
+importe forja
+importe mouseVector
+
+classe Retângulo herda forja.Objeto:
+
+    # Chamado uma vez, quando a cena começa.
+    função pronto():
+        passe
+
+    # Chamado todo quadro. dt = segundos desde o último quadro.
+    # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
+    função atualizar(dt):
+        
+        rawMouse = forja.mouse()
+        
+        mouse = mouseVector.MouseVector()
+        mouse.create(rawMouse[0], rawMouse[1])
+        
+        se mouse.x == este.x e mouse.y == este.y:
+            escreva("Mouse over rectangle")
+        senão:
+            escreva("Mouse X:", mouse.x, "Mouse Y:", mouse.y)
+            escreva("Rectangle X:", este.x, "Rectangle Y:", este.y)
+        
+        passe

@@ -1,0 +1,18 @@
+# Forja backups and session data
+.forja/backup/
+.forja/sessao.json
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor temporary files
+*~
+*.swp
+*.swo

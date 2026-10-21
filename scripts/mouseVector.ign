@@ -1,0 +1,12 @@
+# Script "mouseVector".
+# Para usar num objeto: selecione o objeto na cena e escolha este script no Inspetor.
+importe forja
+
+
+classe MouseVector herda forja.Objeto:
+    
+    função create(x, y):
+        este.x = x
+        este.y = y
+        
+        passe
