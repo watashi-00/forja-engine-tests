@@ -12,6 +12,7 @@
 # Dúvidas? Aperte F1 para abrir o manual.
 
 importe forja
+importe mouseVector
 
 
 função iniciar():
@@ -19,4 +20,5 @@ função iniciar():
 
 
 função atualizar(dt):
+    mouseVector.mouse.capture()
     passe

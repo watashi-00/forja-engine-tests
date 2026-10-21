@@ -6,7 +6,7 @@
   "mundo_altura": 360,
   "objetos": [
     {
-      "nome": "Retângulo",
+      "nome": "Rectangle",
       "tipo": "retangulo",
       "x": 320,
       "y": 160,

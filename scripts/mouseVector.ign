@@ -7,6 +7,14 @@ classe MouseVector herda forja.Objeto:
     
     função create(x, y):
         este.x = x
-        este.y = y
-        
+        este.y = y    
         passe
+        
+    função capture():
+        mx, my = forja.mouse()
+        este.create(mx, my)
+        passe
+        
+        
+## singleton?
+mouse = MouseVector()
