@@ -12,13 +12,13 @@
 # Dúvidas? Aperte F1 para abrir o manual.
 
 importe forja
-importe mouseVector
+importe mouseContoller
 
 
 função iniciar():
     passe
 
 
-função atualizar(dt):
-    mouseVector.mouse.capture()
+função atualizar(dt):  
+    mouseContoller.mouse.capture(dt)
     passe

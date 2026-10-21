@@ -1,0 +1,45 @@
+# Script "mouseVector".
+# Para usar num objeto: selecione o objeto na cena e escolha este script no Inspetor.
+importe forja
+
+classe MouseController herda forja.Objeto:
+
+    função capture(dt):
+        mx, my = forja.mouse()
+        este.x = mx
+        este.y = my
+
+        current = forja.acao("acao")
+
+        este.clicked = current e não este.previous_action
+        este.pressed = current
+        este.released = este.previous_action e não current
+
+        este.long_pressed = falso
+
+        se current:
+            este.hold_time = este.hold_time + dt
+
+            se este.hold_time >= 0.5 e não este.hold_triggered:
+                este.long_pressed = verdadeiro
+                este.hold_triggered = verdadeiro
+        senão:
+            este.hold_time = 0
+            este.hold_triggered = falso
+
+        este.previous_action = current
+        passe
+                
+    função is_over(inst : Object):
+        retorne (
+            este.x >= inst.x e
+            este.x <= inst.x + inst.largura e
+            este.y >= inst.y e
+            este.y <= inst.y + inst.altura
+        )
+        
+
+mouse = MouseController()
+mouse.previous_action = falso
+mouse.hold_time = 0
+mouse.hold_triggered = falso
