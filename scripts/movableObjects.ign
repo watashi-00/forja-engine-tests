@@ -2,7 +2,6 @@
 # Para usar num objeto: selecione o objeto na cena e escolha este script no Inspetor.
 importe forja
 
-
 classe MovableObjects herda forja.Objeto:
 
     função is_movable(inst: Objeto):

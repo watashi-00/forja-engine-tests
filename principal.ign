@@ -14,10 +14,8 @@
 importe forja
 importe mouseContoller
 
-
 função iniciar():
     passe
-
 
 função atualizar(dt):  
     mouseContoller.mouse.capture(dt)
