@@ -1,21 +1,22 @@
 # Script do objeto "Retângulo".
 importe forja
 importe mouseContoller
+importe movableObjects
 
 classe Retângulo herda forja.Objeto:
     mouse = mouseContoller.mouse
 
     # Chamado uma vez, quando a cena começa.
     função pronto():
+        este.grupo = "movable"
         passe
 
     # Chamado todo quadro. dt = segundos desde o último quadro.
     # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
     função atualizar(dt):
         
-        este.grupo = "movable"
-        
         se mouseContoller.mouse.is_over(este) e mouseContoller.mouse.clicked == verdadeiro:
             escreva(f"Mouse over rectangle and {forja.nome_da_tecla('acao')} has clicked")
+            movableObjects.MovableObjects().move(este)
         
         passe

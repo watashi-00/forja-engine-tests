@@ -8,7 +8,18 @@
     {
       "nome": "Rectangle",
       "tipo": "retangulo",
-      "x": 320,
+      "x": 336,
+      "y": 160,
+      "largura": 32,
+      "altura": 32,
+      "cor": "#81c784",
+      "visivel": true,
+      "script": "scripts/rectangle.ign"
+    },
+    {
+      "nome": "Rectangle",
+      "tipo": "retangulo",
+      "x": 400,
       "y": 160,
       "largura": 32,
       "altura": 32,

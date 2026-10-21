@@ -6,5 +6,11 @@ importe forja
 classe MovableObjects herda forja.Objeto:
 
     função is_movable(inst : Objeto):
-        escreva(verdadeiro)
+        retorne inst.grupo == "movable"
+        passe
+        
+    função move(inst : Objeto):
+        se este.is_movable(inst):
+            escreva("is movable")
+            passe
         passe
