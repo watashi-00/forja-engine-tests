@@ -13,7 +13,9 @@ classe Retângulo herda forja.Objeto:
     # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
     função atualizar(dt):
         
-        se este.mouse.x == este.x e este.mouse.y == este.y:
+        
+        ## x start at left bottom and y start at left top
+        se este.mouse.x >= este.x e este.mouse.x <= este.x + este.largura e este.mouse.y >= este.y e este.mouse.y <= este.y + este.altura:
             escreva("Mouse over rectangle")
         senão:
             escreva("Mouse X:", este.mouse.x, "Mouse Y:", este.mouse.y)
