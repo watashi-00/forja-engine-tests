@@ -15,8 +15,8 @@ classe Retângulo herda forja.Objeto:
     # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
     função atualizar(dt):
         
-        se mouseContoller.mouse.is_over(este) e mouseContoller.mouse.clicked == verdadeiro:
+        se mouseContoller.mouse.is_over(este) e mouseContoller.mouse.hold_triggered == verdadeiro:
             escreva(f"Mouse over rectangle and {forja.nome_da_tecla('acao')} has clicked")
-            movableObjects.MovableObjects().move(este)
+            movableObjects.MovableObjects().move(este, dt)
         
         passe

@@ -5,12 +5,41 @@ importe forja
 
 classe MovableObjects herda forja.Objeto:
 
-    função is_movable(inst : Objeto):
-        retorne inst.grupo == "movable"
+    função is_movable(inst: Objeto):
+        retorne (inst em objectList) ou (inst.grupo == "movable")
+        
+    função prepare(inst: Objeto):
+        inst._mov_origin = inst.rotacao
+        inst._mov_offset = 0
+        inst._mov_direction = 1
+    passe
+        
+    função move(inst: Objeto, dt):
+        se não este.is_movable(inst):
+            retorne
+            
+        se não (inst em objectList):
+            escreva("[MovableObjects] Preparing:", inst)
+            este.prepare(inst)
+            objectList[inst] = verdadeiro
+            
+        este._mov_anim(inst, dt)
+        
         passe
         
-    função move(inst : Objeto):
-        se este.is_movable(inst):
-            escreva("is movable")
-            passe
-        passe
+        
+    função _mov_anim(inst: Objeto, dt):
+        inst._mov_offset += inst._mov_direction * 180 * dt
+
+        se inst._mov_offset >= 45:
+            inst._mov_offset = 45
+            inst._mov_direction = -1
+
+        senão se inst._mov_offset <= -45:
+            inst._mov_offset = -45
+            inst._mov_direction = 1
+
+        inst.rotacao = inst._mov_origin + inst._mov_offset
+    passe
+        
+objectList = {}
