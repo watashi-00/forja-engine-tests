@@ -1,5 +1,3 @@
-# Script "mouseVector".
-# Para usar num objeto: selecione o objeto na cena e escolha este script no Inspetor.
 importe forja
 
 classe MouseController herda forja.Objeto:

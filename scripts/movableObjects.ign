@@ -1,5 +1,3 @@
-# Script "movableObjects".
-# Para usar num objeto: selecione o objeto na cena e escolha este script no Inspetor.
 importe forja
 
 classe MovableObjects herda forja.Objeto:
@@ -25,7 +23,6 @@ classe MovableObjects herda forja.Objeto:
         este._mov_anim(inst, dt)
         
         passe
-        
         
     função _mov_anim(inst: Objeto, dt):
         inst._mov_offset += inst._mov_direction * 180 * dt

@@ -1,16 +1,3 @@
-# Script principal de "Meu Jogo". Ele vale para o jogo inteiro, em todas as cenas.
-#
-# A Forja chama estas funções, se existirem:
-#   iniciar()                uma vez, quando o jogo começa
-#   atualizar(dt)            todo quadro (dt = segundos desde o último quadro)
-#   desenhar()               todo quadro, por cima de tudo e fixo na tela (placar, vidas...)
-#   ao_trocar_cena(nome)     quando uma cena nova começa
-#
-# Para começar: abra cenas/principal.cena (dois cliques no painel Recursos), ponha objetos
-# com o botão "+ Adicionar" e, no Inspetor, dê comportamentos prontos a eles
-# ("+ Adicionar comportamento") ou crie um script ("+ Criar script").
-# Dúvidas? Aperte F1 para abrir o manual.
-
 importe forja
 importe mouseContoller
 
