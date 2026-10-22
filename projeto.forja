@@ -15,3 +15,4 @@ acao.action = x, j, controle_x
 acao.confirmar = enter, espaco, controle_a
 acao.cancelar = esc, controle_b
 acao.pausar = esc, controle_start
+acao.attack = z, k, controle_y

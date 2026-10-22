@@ -1,15 +1,18 @@
-
 importe forja
 
 classe Zombie herda forja.Objeto:
 
-    speed = 70
-
     função pronto():
         este.grupo = "enemies"
+        este.speed = 70
+        este.health = 3
+        este.active = verdadeiro
         passe
 
     função atualizar(dt):
+        se não este.active:
+            retorne
+
         se este.colide_grupo("player"):
             retorne
 
@@ -34,5 +37,22 @@ classe Zombie herda forja.Objeto:
 
             este.x += horizontal * este.speed * factor * dt
             este.y += vertical * este.speed * factor * dt
+
+        passe
+
+    função take_damage(damage):
+        se não este.active:
+            retorne
+
+        este.health -= damage
+
+        escreva(f"[Zombie] Damage taken. Health: {este.health}")
+
+        se este.health <= 0:
+            este.active = falso
+            este.visivel = falso
+            este.grupo = "defeated"
+
+            escreva("[Zombie] Enemy defeated.")
 
         passe

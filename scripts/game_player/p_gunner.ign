@@ -10,12 +10,15 @@ classe PGunner herda forja.Objeto:
         este.health = 3
         este.damage_cooldown = 0
         este.alive = verdadeiro
+        este.facing_x = 0
+        este.facing_y = -1
+        este.attack_cooldown = 0
         passe
 
     função atualizar(dt):
         se não este.alive:
             retorne
-            
+
         horizontal = 0
         vertical = 0
 
@@ -37,8 +40,11 @@ classe PGunner herda forja.Objeto:
             se horizontal != 0 e vertical != 0:
                 factor = 0.70710678118
 
-            este.x += horizontal * este.speed * factor * dt
-            este.y += vertical * este.speed * factor * dt
+            este.facing_x = horizontal * factor
+            este.facing_y = vertical * factor
+
+            este.x += este.facing_x * este.speed * dt
+            este.y += este.facing_y * este.speed * dt
 
             se horizontal == 0:
                 se vertical < 0:
@@ -64,23 +70,29 @@ classe PGunner herda forja.Objeto:
                 senão:
                     este.rotacao = 135
 
-        este.check_collectibles()
         este.check_damage(dt)
-        passe
-        
-    função check_collectibles():
-        collectable = este.colide_grupo("collectible")
 
-        se collectable e não collectable.collected:
-            collectable.collected = verdadeiro
-            collectable.visivel = falso
+        se este.alive:
+            este.check_collectibles()
+            este.check_attack(dt)
+
+        passe
+
+    função check_collectibles():
+        collectible = este.colide_grupo("collectible")
+
+        se collectible e não collectible.collected:
+            collectible.collected = verdadeiro
+            collectible.visivel = falso
 
             este.score += 1
 
-            escreva(f"[PGunner] Fragment collected. Score: {este.score}")
+            escreva(
+                f"[PGunner] Fragment collected. Score: {este.score}"
+            )
 
         passe
-        
+
     função check_damage(dt):
         se este.damage_cooldown > 0:
             este.damage_cooldown -= dt
@@ -102,5 +114,26 @@ classe PGunner herda forja.Objeto:
                     este.grupo = "dead"
 
                     escreva("[PGunner] Player defeated.")
+
+        passe
+
+    função check_attack(dt):
+        se este.attack_cooldown > 0:
+            este.attack_cooldown -= dt
+
+        se forja.acao("attack") e este.attack_cooldown <= 0:
+            spawn_x = este.x + este.largura / 2 + este.facing_x * 20 - 4
+            spawn_y = este.y + este.altura / 2 + este.facing_y * 20 - 4
+
+            projectile = forja.crie_modelo(
+                "pulse",
+                spawn_x,
+                spawn_y
+            )
+
+            projectile.velocity_x = este.facing_x * projectile.speed
+            projectile.velocity_y = este.facing_y * projectile.speed
+
+            este.attack_cooldown = 0.25
 
         passe

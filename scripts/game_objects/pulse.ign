@@ -1,0 +1,39 @@
+importe forja
+
+classe Pulse herda forja.Objeto:
+
+    função pronto():
+        este.speed = 420 
+        este.lifetime = 1.5
+        este.grupo = "projectiles"
+        este.velocity_x = 0
+        este.velocity_y = 0
+        este.remaining = este.lifetime
+        este.active = verdadeiro
+        passe
+
+    função atualizar(dt):
+        se não este.active:
+            retorne
+
+        este.remaining -= dt
+
+        se este.remaining <= 0:
+            este.active = falso
+            este.visivel = falso
+            este.grupo = "inactive"
+            retorne
+
+        este.x += este.velocity_x * dt
+        este.y += este.velocity_y * dt
+
+        enemy = este.colide_grupo("enemies")
+
+        se enemy:
+            enemy.take_damage(1)
+
+            este.active = falso
+            este.visivel = falso
+            este.grupo = "inactive"
+
+        passe

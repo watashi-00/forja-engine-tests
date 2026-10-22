@@ -11,7 +11,10 @@
     "objetos/game_objects",
     "objetos/game_player",
     "scripts",
+    "scripts/game_controllers",
+    "scripts/game_core",
     "scripts/game_enemies",
+    "scripts/game_objects",
     "scripts/game_player"
   ]
 }

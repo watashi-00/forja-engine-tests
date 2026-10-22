@@ -1,0 +1,11 @@
+{
+  "nome": "novo_objeto",
+  "tipo": "retangulo",
+  "x": 0,
+  "y": 0,
+  "largura": 8,
+  "altura": 8,
+  "cor": "#55e6ff",
+  "visivel": true,
+  "script": "scripts/game_objects/pulse.ign"
+}
