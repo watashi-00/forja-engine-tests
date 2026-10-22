@@ -10,55 +10,141 @@ classe GameController herda forja.Objeto:
     função pronto():
         este.spawn_timer = 0
         este.spawn_interval = aleatorio.inteiro(este._start, este._end)
+
+        este.max_enemies = 8
+        este.spawn_margin = 64
+        este.min_player_distance = 240
+
+        este.world_width = 1488
+        este.world_height = 1488
         passe
 
     função atualizar(dt):
         este.spawn_timer += dt
 
-        se este.spawn_timer >= este.spawn_interval:
-            este.spawn_timer = 0
-            este.spawn_interval = aleatorio.inteiro(este._start, este._end)
+        se este.spawn_timer < este.spawn_interval:
+            retorne
 
-            cam_x = forja.camera.x
-            cam_y = forja.camera.y
+        este.spawn_timer = 0
+        este.spawn_interval = aleatorio.inteiro(este._start, este._end)
 
-            cam_x_lim = cam_x + forja.largura
-            cam_y_lim = cam_y + forja.altura
+        enemy_count = 0
 
-            margin = 16
+        enemy_count = tamanho(forja.grupo("enemies"))
 
-            spawn_x = aleatorio.inteiro(
-                inteiro(cam_x + margin),
-                inteiro(cam_x_lim - margin)
+        se enemy_count >= este.max_enemies:
+            retorne
+
+        player = nulo
+
+        para current_player em forja.grupo("player"):
+            player = current_player
+            pare
+
+        se não player:
+            retorne
+
+        cam_x = forja.camera.x
+        cam_y = forja.camera.y
+
+        cam_right = cam_x + forja.largura
+        cam_bottom = cam_y + forja.altura
+
+        attempt = 0
+        found = falso
+
+        enquanto attempt < 16 e não found:
+            side = aleatorio.inteiro(0, 3)
+
+            se side == 0:
+                spawn_x = inteiro(
+                    cam_x - este.spawn_margin - 32
+                )
+                spawn_y = aleatorio.inteiro(
+                    inteiro(cam_y),
+                    inteiro(cam_bottom - 32)
+                )
+
+            senão se side == 1:
+                spawn_x = inteiro(
+                    cam_right + este.spawn_margin
+                )
+                spawn_y = aleatorio.inteiro(
+                    inteiro(cam_y),
+                    inteiro(cam_bottom - 32)
+                )
+
+            senão se side == 2:
+                spawn_x = aleatorio.inteiro(
+                    inteiro(cam_x),
+                    inteiro(cam_right - 32)
+                )
+                spawn_y = inteiro(
+                    cam_y - este.spawn_margin - 32
+                )
+
+            senão:
+                spawn_x = aleatorio.inteiro(
+                    inteiro(cam_x),
+                    inteiro(cam_right - 32)
+                )
+                spawn_y = inteiro(
+                    cam_bottom + este.spawn_margin
+                )
+
+            inside_world = (
+                spawn_x >= 0 e
+                spawn_y >= 0 e
+                spawn_x <= este.world_width - 32 e
+                spawn_y <= este.world_height - 32
             )
 
-            spawn_y = aleatorio.inteiro(
-                inteiro(cam_y + margin),
-                inteiro(cam_y_lim - margin)
+            se inside_world:
+                dx = spawn_x - player.x
+                dy = spawn_y - player.y
+
+                distance_squared = dx * dx + dy * dy
+                min_distance_squared = (
+                    este.min_player_distance *
+                    este.min_player_distance
+                )
+
+                se distance_squared >= min_distance_squared:
+                    found = verdadeiro
+
+            attempt += 1
+
+        se found:
+            inst = forja.crie_modelo(
+                "zombie",
+                spawn_x,
+                spawn_y
             )
 
-            inst = forja.crie_modelo("fragment", spawn_x, spawn_y)
-
-            inst._uid = este.random_id()
+            inst._uid = este.random_id("ENMY")
 
             escreva(
-                "[GameController] Fragment spawned:",
+                "[GameController] Enemy spawned:",
                 inst.x,
                 inst.y
+            )
+        senão:
+            escreva(
+                "[GameController] Spawn skipped: no valid position"
             )
 
         passe
 
-    função random_id():
+    função random_id(prefix):
         charset = [
             "0", "1", "2", "3", "4", "5", "6", "7",
             "8", "9", "a", "b", "c", "d", "e", "f"
         ]
 
-        result = ""
+        result = prefix
         i = 0
 
-        enquanto i < 64:
+        enquanto i < 60:
             result += charset[aleatorio.inteiro(0, 15)]
             i += 1
 

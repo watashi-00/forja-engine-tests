@@ -53,6 +53,19 @@ classe Zombie herda forja.Objeto:
             este.visivel = falso
             este.grupo = "defeated"
 
-            escreva("[Zombie] Enemy defeated.")
+            drop_x = este.x + este.largura / 2 - 8
+            drop_y = este.y + este.altura / 2 - 8
+
+            drop = forja.crie_modelo(
+                "fragment",
+                drop_x,
+                drop_y
+            )
+
+            escreva(
+                "[Zombie] Enemy defeated. XP dropped:",
+                drop.x,
+                drop.y
+            )
 
         passe

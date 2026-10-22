@@ -6,7 +6,7 @@ classe PGunner herda forja.Objeto:
 
     função pronto():
         este.grupo = "player"
-        este.score = 0
+        este.xp = 0
         este.health = 3
         este.damage_cooldown = 0
         este.alive = verdadeiro
@@ -84,11 +84,12 @@ classe PGunner herda forja.Objeto:
         se collectible e não collectible.collected:
             collectible.collected = verdadeiro
             collectible.visivel = falso
+            collectible.grupo = "collected"
 
-            este.score += 1
+            este.xp += collectible.xp_value
 
             escreva(
-                f"[PGunner] Fragment collected. Score: {este.score}"
+                f"[PGunner] XP gained: {collectible.xp_value}. Total XP: {este.xp}"
             )
 
         passe

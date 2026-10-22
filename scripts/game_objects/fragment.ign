@@ -1,8 +1,26 @@
 importe forja
+importe aleatorio
 
 classe Fragment herda forja.Objeto:
 
     função pronto():
         este.grupo = "collectible"
         este.collected = falso
+        este.xp_value = 1
+        este._uid = este.random_id()
         passe
+
+    função random_id():
+        charset = [
+            "0", "1", "2", "3", "4", "5", "6", "7",
+            "8", "9", "a", "b", "c", "d", "e", "f"
+        ]
+
+        result = "XPFR"
+        i = 0
+
+        enquanto i < 60:
+            result += charset[aleatorio.inteiro(0, 15)]
+            i += 1
+
+        retorne result
