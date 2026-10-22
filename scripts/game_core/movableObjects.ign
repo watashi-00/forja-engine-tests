@@ -9,7 +9,7 @@ classe MovableObjects herda forja.Objeto:
         inst._mov_origin = inst.rotacao
         inst._mov_offset = 0
         inst._mov_direction = 1
-    passe
+        passe
         
     função move(inst: Objeto, dt):
         se não este.is_movable(inst):

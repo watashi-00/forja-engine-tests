@@ -12,27 +12,28 @@ classe MovableObjectsController herda forja.Objeto:
 
     função atualizar(dt):
         este.spawn_timer += dt
-        
+
         se este.spawn_timer >= este.spawn_interval:
             este.spawn_timer = 0
             este.spawn_interval = aleatorio.inteiro(este._start, este._end)
-            
+
             cam_x = forja.camera.x
             cam_y = forja.camera.y
-            
+
             cam_x_lim = cam_x + forja.largura
             cam_y_lim = cam_y + forja.altura
-            
+
             room_x = aleatorio.inteiro(inteiro(cam_x), inteiro(cam_x_lim))
             room_y = aleatorio.inteiro(inteiro(cam_y), inteiro(cam_y_lim))
-            
+
             inst = forja.crie_modelo("rectangle", room_x, room_y)
-            
+
             inst._uid = este.random_id()
-            
+
+            escreva("[MovableObjectsController] Object created:", inst.x, inst.y)
+
         passe
-        
-        
+
     função random_id():
         charset = [
             "0", "1", "2", "3", "4", "5", "6", "7",

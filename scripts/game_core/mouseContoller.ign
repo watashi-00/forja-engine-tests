@@ -12,11 +12,14 @@ classe MouseController herda forja.Objeto:
         passe
 
     função capture(dt):
-        mx, my = forja.mouse()
+        mx, my = forja.mouse_no_mundo()
         este.x = mx
         este.y = my
 
         current = forja.acao("action")
+        
+        se current != este.previous_action:
+            escreva(f"[MouseController] action changed: {este.previous_action} -> {current}")
 
         este.clicked = current e não este.previous_action
         este.pressed = current
@@ -38,30 +41,37 @@ classe MouseController herda forja.Objeto:
         passe
                 
     função is_over(inst : Object):
-        retorne (
+        inside = (
             este.x >= inst.x e
             este.x <= inst.x + inst.largura e
             este.y >= inst.y e
             este.y <= inst.y + inst.altura
         )
         
+        se inside:
+            escreva("[Mouse Controller] Hit:", inst._uid)
+        retorne inside
 
     função handle_objects(dt):
         se este.clicked:
+            escreva("[MouseController] Click detected")
             este.selected = nulo
 
             para inst em forja.grupo("movable"):
                 se este.is_over(inst):
+                    escreva(f"[MouseController] Selected: {inst._uid}")
                     este.selected = inst
                     pare
 
+            se não este.selected:
+                escreva("[MouseController] No object selected")
+
         se este.released:
             este.selected = nulo
-            passe
 
         se este.pressed e este.selected:
             movableObjects.MovableObjects().move(este.selected, dt)
-
+            
         passe
         
     função step(dt):
