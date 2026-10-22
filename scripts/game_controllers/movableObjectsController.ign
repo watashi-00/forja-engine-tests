@@ -2,10 +2,12 @@ importe forja
 importe aleatorio
 
 classe MovableObjectsController herda forja.Objeto:
+    _start = 0
+    _end   = 3
 
     função pronto():
         este.spawn_timer = 0
-        este.spawn_interval = aleatorio.inteiro(5, 10)
+        este.spawn_interval = aleatorio.inteiro(este._start, este._end)
         passe
 
     função atualizar(dt):
@@ -13,10 +15,16 @@ classe MovableObjectsController herda forja.Objeto:
         
         se este.spawn_timer >= este.spawn_interval:
             este.spawn_timer = 0
-            este.spawn_interval = aleatorio.inteiro(5, 10)
+            este.spawn_interval = aleatorio.inteiro(este._start, este._end)
             
-            room_x = aleatorio.inteiro(0, forja.camera.limites[3])
-            room_y = aleatorio.inteiro(0, forja.camera.limites[2])
+            cam_x = forja.camera.x
+            cam_y = forja.camera.y
+            
+            cam_x_lim = cam_x + forja.largura
+            cam_y_lim = cam_y + forja.altura
+            
+            room_x = aleatorio.inteiro(inteiro(cam_x), inteiro(cam_x_lim))
+            room_y = aleatorio.inteiro(inteiro(cam_y), inteiro(cam_y_lim))
             
             inst = forja.crie_modelo("rectangle", room_x, room_y)
             
