@@ -4,37 +4,53 @@ classe PGunner herda forja.Objeto:
 
     speed = 200
 
-    função pronto():
-        este.keysMapping = {
-            "move_up": este.move_up,
-            "move_left": este.move_left,
-            "move_down": este.move_down,
-            "move_right": este.move_right
-        }
-        passe
-
     função atualizar(dt):
-        para action em este.keysMapping:
-            se forja.acao(action):
-                este.keysMapping[action](dt)
-        passe
+        horizontal = 0
+        vertical = 0
 
-    função move_up(dt):
-        este.y -= este.speed * dt
-        este.rotacao = 0
-        passe
+        se forja.acao("move_left"):
+            horizontal -= 1
 
-    função move_left(dt):
-        este.x -= este.speed * dt
-        este.rotacao = 270
-        passe
+        se forja.acao("move_right"):
+            horizontal += 1
 
-    função move_down(dt):
-        este.y += este.speed * dt
-        este.rotacao = 180
-        passe
+        se forja.acao("move_up"):
+            vertical -= 1
 
-    função move_right(dt):
-        este.x += este.speed * dt
-        este.rotacao = 90
+        se forja.acao("move_down"):
+            vertical += 1
+
+        se horizontal != 0 ou vertical != 0:
+            factor = 1
+
+            se horizontal != 0 e vertical != 0:
+                factor = 0.70710678118
+
+            este.x += horizontal * este.speed * factor * dt
+            este.y += vertical * este.speed * factor * dt
+
+            se horizontal == 0:
+                se vertical < 0:
+                    este.rotacao = 0
+                senão:
+                    este.rotacao = 180
+
+            senão se vertical == 0:
+                se horizontal < 0:
+                    este.rotacao = 270
+                senão:
+                    este.rotacao = 90
+
+            senão se horizontal < 0:
+                se vertical < 0:
+                    este.rotacao = 315
+                senão:
+                    este.rotacao = 225
+
+            senão:
+                se vertical < 0:
+                    este.rotacao = 45
+                senão:
+                    este.rotacao = 135
+
         passe
