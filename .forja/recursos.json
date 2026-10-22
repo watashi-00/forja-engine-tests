@@ -7,10 +7,11 @@
     "cenas",
     "objetos",
     "objetos/game_controllers",
+    "objetos/game_enemies",
     "objetos/game_objects",
     "objetos/game_player",
     "scripts",
-    "scripts/game_objects",
+    "scripts/game_enemies",
     "scripts/game_player"
   ]
 }

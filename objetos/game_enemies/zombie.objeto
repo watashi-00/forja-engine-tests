@@ -5,7 +5,8 @@
   "y": 0,
   "largura": 32,
   "altura": 32,
-  "cor": "#e275ad",
+  "cor": "#089039",
   "visivel": true,
-  "grupo": "enemies"
+  "grupo": "enemies",
+  "script": "scripts/game_enemies/zombie.ign"
 }

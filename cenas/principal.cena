@@ -33,6 +33,12 @@
       "x": -48,
       "y": 48,
       "visivel": false
+    },
+    {
+      "modelo": "objetos/game_enemies/zombie.objeto",
+      "nome": "novo_objeto 3",
+      "x": 448,
+      "y": 864
     }
   ]
 }

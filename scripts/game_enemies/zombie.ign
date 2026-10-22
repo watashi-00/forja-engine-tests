@@ -1,0 +1,38 @@
+
+importe forja
+
+classe Zombie herda forja.Objeto:
+
+    speed = 70
+
+    função pronto():
+        este.grupo = "enemies"
+        passe
+
+    função atualizar(dt):
+        se este.colide_grupo("player"):
+            retorne
+
+        para player em forja.grupo("player"):
+            horizontal = 0
+            vertical = 0
+
+            se player.x < este.x:
+                horizontal = -1
+            senão se player.x > este.x:
+                horizontal = 1
+
+            se player.y < este.y:
+                vertical = -1
+            senão se player.y > este.y:
+                vertical = 1
+
+            factor = 1
+
+            se horizontal != 0 e vertical != 0:
+                factor = 0.70710678118
+
+            este.x += horizontal * este.speed * factor * dt
+            este.y += vertical * este.speed * factor * dt
+
+        passe

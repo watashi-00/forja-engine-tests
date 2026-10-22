@@ -3,7 +3,11 @@ importe forja
 classe PGunner herda forja.Objeto:
 
     speed = 200
-    score = 0
+
+    função pronto():
+        este.grupo = "player"
+        este.score = 0
+        passe
 
     função atualizar(dt):
         horizontal = 0
