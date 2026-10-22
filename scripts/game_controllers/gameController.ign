@@ -1,7 +1,7 @@
 importe forja
 importe aleatorio
 
-classe MovableObjectsController herda forja.Objeto:
+classe GameController herda forja.Objeto:
     _start = 0
     _end   = 3
 
@@ -26,7 +26,7 @@ classe MovableObjectsController herda forja.Objeto:
             room_x = aleatorio.inteiro(inteiro(cam_x), inteiro(cam_x_lim))
             room_y = aleatorio.inteiro(inteiro(cam_y), inteiro(cam_y_lim))
 
-            inst = forja.crie_modelo("rectangle", room_x, room_y)
+            inst = forja.crie_modelo("movableObject", room_x, room_y)
 
             inst._uid = este.random_id()
 

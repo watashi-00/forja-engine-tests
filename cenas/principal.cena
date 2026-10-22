@@ -6,7 +6,7 @@
   "mundo_altura": 1488,
   "objetos": [
     {
-      "modelo": "objetos/game_controllers/movableObjectsController.objeto",
+      "modelo": "objetos/game_controllers/gameController.objeto",
       "nome": "novo_objeto",
       "x": -48,
       "y": 0

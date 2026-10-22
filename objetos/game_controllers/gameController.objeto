@@ -7,5 +7,5 @@
   "altura": 32,
   "cor": "#e275ad",
   "visivel": false,
-  "script": "scripts/game_controllers/movableObjectsController.ign"
+  "script": "scripts/game_controllers/gameController.ign"
 }

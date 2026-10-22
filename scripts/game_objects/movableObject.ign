@@ -1,7 +1,7 @@
 importe forja
 importe movableObjects
 
-classe Retângulo herda forja.Objeto:
+classe MovableObject herda forja.Objeto:
     
     função pronto():
         este.grupo = "movable"
