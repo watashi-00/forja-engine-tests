@@ -1,7 +1,7 @@
 {
   "fundo": "#1e2433",
   "camera_suavidade": 0.15000000596046448,
-  "gravidade": 1500,
+  "gravidade": 20,
   "mundo_largura": 1488,
   "mundo_altura": 1488,
   "objetos": [

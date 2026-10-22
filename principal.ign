@@ -1,6 +1,7 @@
 importe forja
 
 função iniciar():
+    forja.gravidade = 0
     passe
 
 função atualizar(dt):  
