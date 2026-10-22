@@ -33,12 +33,6 @@
       "x": -48,
       "y": 48,
       "visivel": false
-    },
-    {
-      "modelo": "objetos/game_objects/fragment.objeto",
-      "nome": "novo_objeto 3",
-      "x": 688,
-      "y": 736
     }
   ]
 }
