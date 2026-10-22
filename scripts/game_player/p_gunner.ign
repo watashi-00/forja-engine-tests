@@ -3,6 +3,7 @@ importe forja
 classe PGunner herda forja.Objeto:
 
     speed = 200
+    score = 0
 
     função atualizar(dt):
         horizontal = 0
@@ -52,5 +53,19 @@ classe PGunner herda forja.Objeto:
                     este.rotacao = 45
                 senão:
                     este.rotacao = 135
+
+            este.check_collectibles()
+        passe
+        
+    função check_collectibles():
+        collectable = este.colide_grupo("collectible")
+
+        se collectable e não collectable.collected:
+            collectable.collected = verdadeiro
+            collectable.visivel = falso
+
+            este.score += 1
+
+            escreva(f"[PGunner] Fragment collected. Score: {este.score}")
 
         passe

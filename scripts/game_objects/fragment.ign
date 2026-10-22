@@ -1,0 +1,8 @@
+importe forja
+
+classe Fragment herda forja.Objeto:
+
+    função pronto():
+        este.grupo = "collectible"
+        este.collected = falso
+        passe

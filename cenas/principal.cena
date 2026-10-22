@@ -1,7 +1,7 @@
 {
   "fundo": "#1e2433",
   "camera_suavidade": 0.15000000596046448,
-  "gravidade": 20,
+  "gravidade": 0,
   "mundo_largura": 1488,
   "mundo_altura": 1488,
   "objetos": [
@@ -33,6 +33,12 @@
       "x": -48,
       "y": 48,
       "visivel": false
+    },
+    {
+      "modelo": "objetos/game_objects/fragment.objeto",
+      "nome": "novo_objeto 3",
+      "x": 688,
+      "y": 736
     }
   ]
 }
