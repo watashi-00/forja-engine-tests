@@ -7,9 +7,15 @@ classe PGunner herda forja.Objeto:
     função pronto():
         este.grupo = "player"
         este.score = 0
+        este.health = 3
+        este.damage_cooldown = 0
+        este.alive = verdadeiro
         passe
 
     função atualizar(dt):
+        se não este.alive:
+            retorne
+            
         horizontal = 0
         vertical = 0
 
@@ -59,6 +65,7 @@ classe PGunner herda forja.Objeto:
                     este.rotacao = 135
 
         este.check_collectibles()
+        este.check_damage(dt)
         passe
         
     função check_collectibles():
@@ -71,5 +78,29 @@ classe PGunner herda forja.Objeto:
             este.score += 1
 
             escreva(f"[PGunner] Fragment collected. Score: {este.score}")
+
+        passe
+        
+    função check_damage(dt):
+        se este.damage_cooldown > 0:
+            este.damage_cooldown -= dt
+
+        se este.damage_cooldown <= 0:
+            enemy = este.colide_grupo("enemies")
+
+            se enemy:
+                este.health -= 1
+                este.damage_cooldown = 1.0
+
+                escreva(
+                    f"[PGunner] Damage taken. Health: {este.health}"
+                )
+
+                se este.health <= 0:
+                    este.alive = falso
+                    este.visivel = falso
+                    este.grupo = "dead"
+
+                    escreva("[PGunner] Player defeated.")
 
         passe
