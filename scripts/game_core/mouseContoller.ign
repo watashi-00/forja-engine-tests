@@ -1,6 +1,15 @@
 importe forja
+importe movableObjects
 
 classe MouseController herda forja.Objeto:
+    
+    função pronto():
+        este.selected = nulo
+        passe
+        
+    função atualizar(dt):  
+        mouse.step(dt)
+        passe
 
     função capture(dt):
         mx, my = forja.mouse()
@@ -36,6 +45,30 @@ classe MouseController herda forja.Objeto:
             este.y <= inst.y + inst.altura
         )
         
+
+    função handle_objects(dt):
+        se este.clicked:
+            este.selected = nulo
+
+            para inst em forja.grupo("movable"):
+                se este.is_over(inst):
+                    este.selected = inst
+                    pare
+
+        se este.released:
+            este.selected = nulo
+            passe
+
+        se este.pressed e este.selected:
+            movableObjects.MovableObjects().move(este.selected, dt)
+
+        passe
+        
+    função step(dt):
+        mouse.capture(dt)
+        mouse.handle_objects(dt)
+        passe
+    
 
 mouse = MouseController()
 mouse.previous_action = falso

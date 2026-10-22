@@ -9,8 +9,7 @@
       "modelo": "objetos/game_controllers/movableObjectsController.objeto",
       "nome": "novo_objeto",
       "x": -48,
-      "y": 0,
-      "script": "scripts/game_controllers/movableObjectsController.ign"
+      "y": 0
     },
     {
       "modelo": "objetos/game_player/p_gunner.objeto",
@@ -27,6 +26,13 @@
           "suavidade": 0.12
         }
       ]
+    },
+    {
+      "modelo": "objetos/game_controllers/mouseController.objeto",
+      "nome": "novo_objeto 2",
+      "x": -48,
+      "y": 48,
+      "visivel": false
     }
   ]
 }

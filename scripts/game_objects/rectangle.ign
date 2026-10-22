@@ -1,18 +1,11 @@
 importe forja
-importe mouseContoller
 importe movableObjects
 
 classe Retângulo herda forja.Objeto:
-    mouse = mouseContoller.mouse
-
+    
     função pronto():
         este.grupo = "movable"
         passe
 
     função atualizar(dt):
-        
-        se mouseContoller.mouse.is_over(este) e mouseContoller.mouse.hold_triggered == verdadeiro:
-            escreva(f"Mouse over rectangle and {forja.nome_da_tecla('action')} has clicked")
-            movableObjects.MovableObjects().move(este, dt)
-        
-        passe   
+        passe
