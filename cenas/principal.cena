@@ -2,15 +2,31 @@
   "fundo": "#1e2433",
   "camera_suavidade": 0.15000000596046448,
   "gravidade": 1500,
-  "mundo_largura": 640,
-  "mundo_altura": 360,
+  "mundo_largura": 1488,
+  "mundo_altura": 1488,
   "objetos": [
     {
-      "modelo": "objetos/controller.objeto",
+      "modelo": "objetos/game_controllers/movableObjectsController.objeto",
       "nome": "novo_objeto",
       "x": -48,
       "y": 0,
       "script": "scripts/game_controllers/movableObjectsController.ign"
+    },
+    {
+      "modelo": "objetos/game_player/p_gunner.objeto",
+      "nome": "p_gunner",
+      "x": 736,
+      "y": 736,
+      "script": "scripts/game_player/p_gunner.ign",
+      "comportamentos": [
+        {
+          "tipo": "nao_sair"
+        },
+        {
+          "tipo": "camera_segue",
+          "suavidade": 0.12
+        }
+      ]
     }
   ]
 }

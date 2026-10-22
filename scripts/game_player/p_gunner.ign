@@ -1,0 +1,33 @@
+# Script do objeto "p_gunner".
+importe forja
+
+classe PGunner herda forja.Objeto:
+
+    # Chamado uma vez, quando a cena começa.
+    função pronto():
+        passe
+
+    # Chamado todo quadro. dt = segundos desde o último quadro.
+    # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
+    função atualizar(dt):
+        tecla = forja.ultima_tecla()
+        
+        se não tecla:
+            passe
+        
+        se tecla em keysMapping:
+            keysMapping[tecla]()
+            passe
+        passe
+        
+    função dictionariesCanExecuteFunctions():
+        escreva("x_gunner")
+        passe
+
+
+
+    
+gunner = PGunner()
+keysMapping = {
+    "x": gunner.dictionariesCanExecuteFunctions
+}
