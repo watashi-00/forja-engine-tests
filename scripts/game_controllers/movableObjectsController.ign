@@ -15,8 +15,8 @@ classe MovableObjectsController herda forja.Objeto:
             este.spawn_timer = 0
             este.spawn_interval = aleatorio.inteiro(5, 10)
             
-            room_x = aleatorio.inteiro(0, forja.altura)
-            room_y = aleatorio.inteiro(0, forja.largura)
+            room_x = aleatorio.inteiro(0, forja.camera.limites[3])
+            room_y = aleatorio.inteiro(0, forja.camera.limites[2])
             
             inst = forja.crie_modelo("rectangle", room_x, room_y)
             

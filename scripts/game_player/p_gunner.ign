@@ -1,33 +1,40 @@
-# Script do objeto "p_gunner".
 importe forja
 
 classe PGunner herda forja.Objeto:
 
-    # Chamado uma vez, quando a cena começa.
+    speed = 200
+
     função pronto():
+        este.keysMapping = {
+            "move_up": este.move_up,
+            "move_left": este.move_left,
+            "move_down": este.move_down,
+            "move_right": este.move_right
+        }
         passe
 
-    # Chamado todo quadro. dt = segundos desde o último quadro.
-    # Use este.x, este.y, este.cor, este.largura... para mudar o objeto.
     função atualizar(dt):
-        tecla = forja.ultima_tecla()
-        
-        se não tecla:
-            passe
-        
-        se tecla em keysMapping:
-            keysMapping[tecla]()
-            passe
-        passe
-        
-    função dictionariesCanExecuteFunctions():
-        escreva("x_gunner")
+        para action em este.keysMapping:
+            se forja.acao(action):
+                este.keysMapping[action](dt)
         passe
 
+    função move_up(dt):
+        este.y -= este.speed * dt
+        este.rotacao = 0
+        passe
 
+    função move_left(dt):
+        este.x -= este.speed * dt
+        este.rotacao = 270
+        passe
 
-    
-gunner = PGunner()
-keysMapping = {
-    "x": gunner.dictionariesCanExecuteFunctions
-}
+    função move_down(dt):
+        este.y += este.speed * dt
+        este.rotacao = 180
+        passe
+
+    função move_right(dt):
+        este.x += este.speed * dt
+        este.rotacao = 90
+        passe

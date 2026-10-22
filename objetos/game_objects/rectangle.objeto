@@ -5,7 +5,7 @@
   "y": 0,
   "largura": 32,
   "altura": 32,
-  "cor": "#e275ad",
+  "cor": "#0d5540",
   "visivel": true,
   "script": "scripts/game_objects/rectangle.ign"
 }

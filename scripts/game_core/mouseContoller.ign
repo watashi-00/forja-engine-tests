@@ -7,7 +7,7 @@ classe MouseController herda forja.Objeto:
         este.x = mx
         este.y = my
 
-        current = forja.acao("acao")
+        current = forja.acao("action")
 
         este.clicked = current e não este.previous_action
         este.pressed = current
