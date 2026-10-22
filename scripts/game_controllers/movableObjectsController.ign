@@ -1,0 +1,41 @@
+importe forja
+importe aleatorio
+
+classe MovableObjectsController herda forja.Objeto:
+
+    função pronto():
+        este.spawn_timer = 0
+        este.spawn_interval = aleatorio.inteiro(5, 10)
+        passe
+
+    função atualizar(dt):
+        este.spawn_timer += dt
+        
+        se este.spawn_timer >= este.spawn_interval:
+            este.spawn_timer = 0
+            este.spawn_interval = aleatorio.inteiro(5, 10)
+            
+            room_x = aleatorio.inteiro(0, forja.altura)
+            room_y = aleatorio.inteiro(0, forja.largura)
+            
+            inst = forja.crie_modelo("rectangle", room_x, room_y)
+            
+            inst._uid = este.random_id()
+            
+        passe
+        
+        
+    função random_id():
+        charset = [
+            "0", "1", "2", "3", "4", "5", "6", "7",
+            "8", "9", "a", "b", "c", "d", "e", "f"
+        ]
+
+        result = ""
+        i = 0
+
+        enquanto i < 64:
+            result += charset[aleatorio.inteiro(0, 15)]
+            i += 1
+
+        retorne result

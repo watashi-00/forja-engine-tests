@@ -1,0 +1,11 @@
+{
+  "nome": "rectangle",
+  "tipo": "retangulo",
+  "x": 0,
+  "y": 0,
+  "largura": 32,
+  "altura": 32,
+  "cor": "#e275ad",
+  "visivel": true,
+  "script": "scripts/game_objects/rectangle.ign"
+}

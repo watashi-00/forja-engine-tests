@@ -6,6 +6,9 @@
   "abertas": [
     "cenas",
     "objetos",
-    "scripts"
+    "scripts",
+    "scripts/game_controllers",
+    "scripts/game_core",
+    "scripts/game_objects"
   ]
 }

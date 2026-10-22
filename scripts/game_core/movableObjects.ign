@@ -3,7 +3,7 @@ importe forja
 classe MovableObjects herda forja.Objeto:
 
     função is_movable(inst: Objeto):
-        retorne (inst em objectList) ou (inst.grupo == "movable")
+        retorne (inst._uid em objectList) ou (inst.grupo == "movable")
         
     função prepare(inst: Objeto):
         inst._mov_origin = inst.rotacao
@@ -15,10 +15,10 @@ classe MovableObjects herda forja.Objeto:
         se não este.is_movable(inst):
             retorne
             
-        se não (inst em objectList):
-            escreva("[MovableObjects] Preparing:", inst)
+        se não (inst._uid em objectList):
+            escreva("[MovableObjects] Preparing:", inst._uid)
             este.prepare(inst)
-            objectList[inst] = verdadeiro
+            objectList[inst._uid] = verdadeiro
             
         este._mov_anim(inst, dt)
         
