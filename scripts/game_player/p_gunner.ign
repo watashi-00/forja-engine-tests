@@ -54,7 +54,7 @@ classe PGunner herda forja.Objeto:
                 senão:
                     este.rotacao = 135
 
-            este.check_collectibles()
+        este.check_collectibles()
         passe
         
     função check_collectibles():
