@@ -15,16 +15,7 @@
       "modelo": "objetos/game_player/p_gunner.objeto",
       "nome": "p_gunner",
       "x": 736,
-      "y": 736,
-      "comportamentos": [
-        {
-          "tipo": "nao_sair"
-        },
-        {
-          "tipo": "camera_segue",
-          "suavidade": 0.12
-        }
-      ]
+      "y": 736
     },
     {
       "modelo": "objetos/game_enemies/zombie.objeto",

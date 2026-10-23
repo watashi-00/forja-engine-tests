@@ -1,5 +1,4 @@
 importe forja
-importe movableObjects
 
 classe MovableObject herda forja.Objeto:
 
