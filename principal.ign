@@ -6,3 +6,13 @@ função iniciar():
 
 função atualizar(dt):  
     passe
+
+função desenhar():
+    player = forja.objeto("p_gunner")
+
+    se player != nulo:
+        para i em intervalo(player.health_max):
+            cor = "vermelho" se i < player.health senão "#3a2030"
+            forja.retangulo(12 + i * 20, 10, 16, 16, cor, arredondar = 3)
+
+    forja.texto(f"XP: {forja.pontos}", forja.largura - 12, 10, "amarelo", 18, alinhar = "direita")
