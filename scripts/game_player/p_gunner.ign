@@ -1,140 +1,111 @@
 importe forja
+importe matematica
 
 classe PGunner herda forja.Objeto:
 
-    speed = 200
+    health_max = 3
+    invuln_time = 1.0
+    attack_interval = 0.25
+    muzzle_offset = 20
+
+    health = 3
+    invuln = 0
+    attack_cooldown = 0
+    alive = verdadeiro
+    facing_x = 0
+    facing_y = -1
 
     função pronto():
-        este.grupo = "player"
-        este.xp = 0
-        este.health = 3
-        este.damage_cooldown = 0
-        este.alive = verdadeiro
-        este.facing_x = 0
-        este.facing_y = -1
-        este.attack_cooldown = 0
-        passe
+        este.health = este.health_max
 
     função atualizar(dt):
         se não este.alive:
             retorne
 
-        horizontal = 0
-        vertical = 0
-
-        se forja.acao("move_left"):
-            horizontal -= 1
-
-        se forja.acao("move_right"):
-            horizontal += 1
-
-        se forja.acao("move_up"):
-            vertical -= 1
-
-        se forja.acao("move_down"):
-            vertical += 1
-
-        se horizontal != 0 ou vertical != 0:
-            factor = 1
-
-            se horizontal != 0 e vertical != 0:
-                factor = 0.70710678118
-
-            este.facing_x = horizontal * factor
-            este.facing_y = vertical * factor
-
-            este.x += este.facing_x * este.speed * dt
-            este.y += este.facing_y * este.speed * dt
-
-            se horizontal == 0:
-                se vertical < 0:
-                    este.rotacao = 0
-                senão:
-                    este.rotacao = 180
-
-            senão se vertical == 0:
-                se horizontal < 0:
-                    este.rotacao = 270
-                senão:
-                    este.rotacao = 90
-
-            senão se horizontal < 0:
-                se vertical < 0:
-                    este.rotacao = 315
-                senão:
-                    este.rotacao = 225
-
-            senão:
-                se vertical < 0:
-                    este.rotacao = 45
-                senão:
-                    este.rotacao = 135
-
-        este.check_damage(dt)
+        este.update_facing()
+        este.update_invuln(dt)
+        este.check_damage()
 
         se este.alive:
-            este.check_collectibles()
             este.check_attack(dt)
 
-        passe
+    função update_facing():
+        dx = forja.eixo_acao("esquerda", "direita")
+        dy = forja.eixo_acao("cima", "baixo")
 
-    função check_collectibles():
-        collectible = este.colide_grupo("collectible")
+        length = matematica.hipotenusa(dx, dy)
 
-        se collectible e não collectible.collected:
-            collectible.collected = verdadeiro
-            collectible.visivel = falso
-            collectible.grupo = "collected"
+        se length == 0:
+            retorne
 
-            este.xp += collectible.xp_value
+        este.facing_x = dx / length
+        este.facing_y = dy / length
 
-            escreva(
-                f"[PGunner] XP gained: {collectible.xp_value}. Total XP: {este.xp}"
-            )
+        este.rotacao = (forja.direcao(0, 0, este.facing_x, este.facing_y) + 90) % 360
 
-        passe
+    função update_invuln(dt):
+        se este.invuln <= 0:
+            retorne
 
-    função check_damage(dt):
-        se este.damage_cooldown > 0:
-            este.damage_cooldown -= dt
+        este.invuln -= dt
 
-        se este.damage_cooldown <= 0:
-            enemy = este.colide_grupo("enemies")
+        se este.invuln <= 0:
+            este.alfa = 1
+        senão:
+            este.alfa = 0.35 se inteiro(este.invuln * 15) % 2 == 0 senão 1
 
-            se enemy:
-                este.health -= 1
-                este.damage_cooldown = 1.0
+    função check_damage():
+        se este.invuln > 0:
+            retorne
 
-                escreva(
-                    f"[PGunner] Damage taken. Health: {este.health}"
-                )
+        se este.colide_grupo("enemies") != nulo:
+            este.take_damage(1)
 
-                se este.health <= 0:
-                    este.alive = falso
-                    este.visivel = falso
-                    este.grupo = "dead"
+    função take_damage(amount):
+        se não este.alive ou este.invuln > 0:
+            retorne
 
-                    escreva("[PGunner] Player defeated.")
+        este.health -= amount
+        este.invuln = este.invuln_time
 
-        passe
+        forja.som("dano")
+        forja.camera.trema(5, 0.2)
+
+        se este.health <= 0:
+            este.die()
+
+    função die():
+        este.alive = falso
+        este.visivel = falso
+        este.ativo = falso
+
+        forja.pontos = 0
+
+        cx, cy = este.centro()
+        forja.particulas(cx, cy, 40, "vermelho", velocidade = 250, vida = 0.7)
+        forja.som("perdeu")
+        forja.camera.trema(8, 0.4)
+
+        forja.espere(1.5, forja.reinicie_cena)
 
     função check_attack(dt):
         se este.attack_cooldown > 0:
             este.attack_cooldown -= dt
 
-        se forja.acao("attack") e este.attack_cooldown <= 0:
-            spawn_x = este.x + este.largura / 2 + este.facing_x * 20 - 4
-            spawn_y = este.y + este.altura / 2 + este.facing_y * 20 - 4
+        se não forja.acao("attack") ou este.attack_cooldown > 0:
+            retorne
 
-            projectile = forja.crie_modelo(
-                "pulse",
-                spawn_x,
-                spawn_y
-            )
+        este.attack_cooldown = este.attack_interval
 
-            projectile.velocity_x = este.facing_x * projectile.speed
-            projectile.velocity_y = este.facing_y * projectile.speed
+        cx, cy = este.centro()
+        angle = forja.direcao(0, 0, este.facing_x, este.facing_y)
+        ox, oy = forja.vetor(este.muzzle_offset, angle)
 
-            este.attack_cooldown = 0.25
+        bullet = forja.crie_modelo("pulse", 0, 0)
+        bullet.x = cx + ox - bullet.largura / 2
+        bullet.y = cy + oy - bullet.altura / 2
 
-        passe
+        bullet.adicione_comportamento("mover", { "direcao": angle, "velocidade": bullet.speed })
+        bullet.adicione_comportamento("sumir_fora")
+
+        forja.som("tiro", volume = 0.4)

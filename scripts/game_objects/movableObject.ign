@@ -2,10 +2,34 @@ importe forja
 importe movableObjects
 
 classe MovableObject herda forja.Objeto:
-    
+
+    wobble_amplitude = 45
+    wobble_speed = 180
+    wobble_offset = 0
+    wobble_direction = 1
+
     função pronto():
-        este.grupo = "movable"
-        passe
+        este.wobble_origin = este.rotacao
 
     função atualizar(dt):
-        passe
+        se este.is_held():
+            este.wobble(dt)
+
+    função is_held():
+        se não forja.mouse_pressionado(0):
+            retorne falso
+
+        mx, my = forja.mouse_no_mundo()
+        retorne forja.colisao_ponto(mx, my, este) != nulo
+
+    função wobble(dt):
+        este.wobble_offset += este.wobble_direction * este.wobble_speed * dt
+
+        se este.wobble_offset >= este.wobble_amplitude:
+            este.wobble_offset = este.wobble_amplitude
+            este.wobble_direction = -1
+        senão se este.wobble_offset <= -este.wobble_amplitude:
+            este.wobble_offset = -este.wobble_amplitude
+            este.wobble_direction = 1
+
+        este.rotacao = este.wobble_origin + este.wobble_offset

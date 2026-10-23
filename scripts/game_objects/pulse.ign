@@ -2,38 +2,23 @@ importe forja
 
 classe Pulse herda forja.Objeto:
 
+    speed = 420
+    lifetime = 1.5
+    damage = 1
+    spent = falso
+
     função pronto():
-        este.speed = 420 
-        este.lifetime = 1.5
-        este.grupo = "projectiles"
-        este.velocity_x = 0
-        este.velocity_y = 0
-        este.remaining = este.lifetime
-        este.active = verdadeiro
-        passe
+        este.alarme(0, este.lifetime)
 
-    função atualizar(dt):
-        se não este.active:
+    função ao_alarme(numero):
+        se numero == 0:
+            este.destrua()
+
+    função ao_colidir(other):
+        se este.spent ou other.grupo != "enemies":
             retorne
 
-        este.remaining -= dt
-
-        se este.remaining <= 0:
-            este.active = falso
-            este.visivel = falso
-            este.grupo = "inactive"
-            retorne
-
-        este.x += este.velocity_x * dt
-        este.y += este.velocity_y * dt
-
-        enemy = este.colide_grupo("enemies")
-
-        se enemy:
-            enemy.take_damage(1)
-
-            este.active = falso
-            este.visivel = falso
-            este.grupo = "inactive"
-
-        passe
+        se tem_atributo(other, "take_damage"):
+            este.spent = verdadeiro
+            other.take_damage(este.damage)
+            este.destrua()

@@ -6,5 +6,21 @@
   "largura": 32,
   "altura": 32,
   "cor": "#e275ad",
-  "visivel": true
+  "visivel": true,
+  "grupo": "player",
+  "fisica": true,
+  "script": "scripts/game_player/p_gunner.ign",
+  "comportamentos": [
+    {
+      "tipo": "oito_direcoes",
+      "velocidade": 200
+    },
+    {
+      "tipo": "nao_sair"
+    },
+    {
+      "tipo": "camera_segue",
+      "suavidade": 0.12
+    }
+  ]
 }

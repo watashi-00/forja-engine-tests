@@ -16,7 +16,6 @@
       "nome": "p_gunner",
       "x": 736,
       "y": 736,
-      "script": "scripts/game_player/p_gunner.ign",
       "comportamentos": [
         {
           "tipo": "nao_sair"
@@ -26,13 +25,6 @@
           "suavidade": 0.12
         }
       ]
-    },
-    {
-      "modelo": "objetos/game_controllers/mouseController.objeto",
-      "nome": "novo_objeto 2",
-      "x": -48,
-      "y": 48,
-      "visivel": false
     },
     {
       "modelo": "objetos/game_enemies/zombie.objeto",

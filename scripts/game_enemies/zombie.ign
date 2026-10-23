@@ -2,70 +2,48 @@ importe forja
 
 classe Zombie herda forja.Objeto:
 
-    função pronto():
-        este.grupo = "enemies"
-        este.speed = 70
-        este.health = 3
-        este.active = verdadeiro
-        passe
+    speed = 70
+    health = 3
+    dead = falso
+    target = nulo
 
     função atualizar(dt):
-        se não este.active:
+        este.find_target()
+
+        se este.target == nulo:
             retorne
 
-        se este.colide_grupo("player"):
+        se este.colide(este.target):
             retorne
 
-        para player em forja.grupo("player"):
-            horizontal = 0
-            vertical = 0
+        dx, dy = forja.vetor(este.speed * dt, este.direcao_ate(este.target))
+        este.mova(dx, dy)
 
-            se player.x < este.x:
-                horizontal = -1
-            senão se player.x > este.x:
-                horizontal = 1
-
-            se player.y < este.y:
-                vertical = -1
-            senão se player.y > este.y:
-                vertical = 1
-
-            factor = 1
-
-            se horizontal != 0 e vertical != 0:
-                factor = 0.70710678118
-
-            este.x += horizontal * este.speed * factor * dt
-            este.y += vertical * este.speed * factor * dt
-
-        passe
-
-    função take_damage(damage):
-        se não este.active:
+    função find_target():
+        se este.target != nulo e este.target.ativo:
             retorne
 
-        este.health -= damage
+        cx, cy = este.centro()
+        este.target = forja.mais_proximo(cx, cy, "player")
 
-        escreva(f"[Zombie] Damage taken. Health: {este.health}")
+    função take_damage(amount):
+        se este.dead:
+            retorne
 
-        se este.health <= 0:
-            este.active = falso
-            este.visivel = falso
-            este.grupo = "defeated"
+        este.health -= amount
 
-            drop_x = este.x + este.largura / 2 - 8
-            drop_y = este.y + este.altura / 2 - 8
+        se este.health > 0:
+            forja.som("dano", volume = 0.3, tom = 1.4)
+            retorne
 
-            drop = forja.crie_modelo(
-                "fragment",
-                drop_x,
-                drop_y
-            )
+        este.dead = verdadeiro
+        cx, cy = este.centro()
 
-            escreva(
-                "[Zombie] Enemy defeated. XP dropped:",
-                drop.x,
-                drop.y
-            )
+        forja.particulas(cx, cy, 20, este.cor, cor_final = "#0a3010", velocidade = 160, vida = 0.5)
+        forja.som("explosao", volume = 0.4)
 
-        passe
+        drop = forja.crie_modelo("fragment", 0, 0)
+        drop.x = cx - drop.largura / 2
+        drop.y = cy - drop.altura / 2
+
+        este.destrua()

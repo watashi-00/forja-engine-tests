@@ -7,5 +7,12 @@
   "altura": 16,
   "cor": "#55e6a5",
   "visivel": true,
-  "script": "scripts/game_objects/fragment.ign"
+  "comportamentos": [
+    {
+      "tipo": "coletavel",
+      "quem": "player",
+      "valor": 1,
+      "som": ""
+    }
+  ]
 }

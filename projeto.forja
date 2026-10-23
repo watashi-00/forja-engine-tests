@@ -6,10 +6,10 @@ largura = 640
 altura = 360
 
 # Ações de entrada (Projeto > Propriedades > Controles). No código: forja.acao("pular")
-acao.move_left = esquerda, a, controle_esquerda, analogico_esquerda
-acao.move_right = direita, d, controle_direita, analogico_direita
-acao.move_up = cima, w, controle_cima, analogico_cima
-acao.move_down = baixo, s, controle_baixo, analogico_baixo
+acao.esquerda = esquerda, a, controle_esquerda, analogico_esquerda
+acao.direita = direita, d, controle_direita, analogico_direita
+acao.cima = cima, w, controle_cima, analogico_cima
+acao.baixo = baixo, s, controle_baixo, analogico_baixo
 acao.pular = espaco, controle_a
 acao.action = x, j, controle_x
 acao.confirmar = enter, espaco, controle_a
