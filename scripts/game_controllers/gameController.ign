@@ -1,151 +1,87 @@
-
 importe forja
 importe aleatorio
 
 classe GameController herda forja.Objeto:
 
-    _start = 2
-    _end = 4
+    spawn_min = 2
+    spawn_max = 4
+    max_enemies = 8
+    spawn_margin = 64
+    min_player_distance = 240
+    spawn_attempts = 16
+    enemy_size = 32
+    default_world = 1488
 
     função pronto():
-        este.spawn_timer = 0
-        este.spawn_interval = aleatorio.inteiro(este._start, este._end)
-
-        este.max_enemies = 8
-        este.spawn_margin = 64
-        este.min_player_distance = 240
-
-        este.world_width = 1488
-        este.world_height = 1488
-        passe
+        este.spawn_timer = aleatorio.uniforme(este.spawn_min, este.spawn_max)
 
     função atualizar(dt):
-        este.spawn_timer += dt
+        este.spawn_timer -= dt
 
-        se este.spawn_timer < este.spawn_interval:
+        se este.spawn_timer > 0:
             retorne
 
-        este.spawn_timer = 0
-        este.spawn_interval = aleatorio.inteiro(este._start, este._end)
+        este.spawn_timer = aleatorio.uniforme(este.spawn_min, este.spawn_max)
 
-        enemy_count = 0
-
-        enemy_count = tamanho(forja.grupo("enemies"))
-
-        se enemy_count >= este.max_enemies:
+        se tamanho(forja.grupo("enemies")) >= este.max_enemies:
             retorne
 
-        player = nulo
+        players = forja.grupo("player")
 
-        para current_player em forja.grupo("player"):
-            player = current_player
-            pare
-
-        se não player:
+        se tamanho(players) == 0:
             retorne
 
-        cam_x = forja.camera.x
-        cam_y = forja.camera.y
+        point = este.find_spawn_point(players[0])
 
-        cam_right = cam_x + forja.largura
-        cam_bottom = cam_y + forja.altura
+        se point == nulo:
+            retorne
 
-        attempt = 0
-        found = falso
+        forja.crie_modelo("zombie", point[0], point[1])
 
-        enquanto attempt < 16 e não found:
+    # Find a point just outside the camera, inside the world and far from the player.
+    função find_spawn_point(player):
+        camera = forja.camera
+        view_w = forja.largura / camera.zoom
+        view_h = forja.altura / camera.zoom
+
+        # Get world bounds from the camera; use the default if no limits are defined.
+        world_x = 0
+        world_y = 0
+        world_w = este.default_world
+        world_h = este.default_world
+
+        se camera.limites != nulo:
+            world_x, world_y, world_w, world_h = camera.limites
+
+        left = camera.x - este.spawn_margin - este.enemy_size
+        right = camera.x + view_w + este.spawn_margin
+        top = camera.y - este.spawn_margin - este.enemy_size
+        bottom = camera.y + view_h + este.spawn_margin
+
+        para attempt em intervalo(este.spawn_attempts):
             side = aleatorio.inteiro(0, 3)
 
             se side == 0:
-                spawn_x = inteiro(
-                    cam_x - este.spawn_margin - 32
-                )
-                spawn_y = aleatorio.inteiro(
-                    inteiro(cam_y),
-                    inteiro(cam_bottom - 32)
-                )
-
+                x = left
+                y = aleatorio.uniforme(camera.y, camera.y + view_h - este.enemy_size)
             senão se side == 1:
-                spawn_x = inteiro(
-                    cam_right + este.spawn_margin
-                )
-                spawn_y = aleatorio.inteiro(
-                    inteiro(cam_y),
-                    inteiro(cam_bottom - 32)
-                )
-
+                x = right
+                y = aleatorio.uniforme(camera.y, camera.y + view_h - este.enemy_size)
             senão se side == 2:
-                spawn_x = aleatorio.inteiro(
-                    inteiro(cam_x),
-                    inteiro(cam_right - 32)
-                )
-                spawn_y = inteiro(
-                    cam_y - este.spawn_margin - 32
-                )
-
+                x = aleatorio.uniforme(camera.x, camera.x + view_w - este.enemy_size)
+                y = top
             senão:
-                spawn_x = aleatorio.inteiro(
-                    inteiro(cam_x),
-                    inteiro(cam_right - 32)
-                )
-                spawn_y = inteiro(
-                    cam_bottom + este.spawn_margin
-                )
+                x = aleatorio.uniforme(camera.x, camera.x + view_w - este.enemy_size)
+                y = bottom
 
             inside_world = (
-                spawn_x >= 0 e
-                spawn_y >= 0 e
-                spawn_x <= este.world_width - 32 e
-                spawn_y <= este.world_height - 32
+                x >= world_x e
+                y >= world_y e
+                x <= world_x + world_w - este.enemy_size e
+                y <= world_y + world_h - este.enemy_size
             )
 
-            se inside_world:
-                dx = spawn_x - player.x
-                dy = spawn_y - player.y
+            se inside_world e forja.distancia(x, y, player.x, player.y) >= este.min_player_distance:
+                retorne [x, y]
 
-                distance_squared = dx * dx + dy * dy
-                min_distance_squared = (
-                    este.min_player_distance *
-                    este.min_player_distance
-                )
-
-                se distance_squared >= min_distance_squared:
-                    found = verdadeiro
-
-            attempt += 1
-
-        se found:
-            inst = forja.crie_modelo(
-                "zombie",
-                spawn_x,
-                spawn_y
-            )
-
-            inst._uid = este.random_id("ENMY")
-
-            escreva(
-                "[GameController] Enemy spawned:",
-                inst.x,
-                inst.y
-            )
-        senão:
-            escreva(
-                "[GameController] Spawn skipped: no valid position"
-            )
-
-        passe
-
-    função random_id(prefix):
-        charset = [
-            "0", "1", "2", "3", "4", "5", "6", "7",
-            "8", "9", "a", "b", "c", "d", "e", "f"
-        ]
-
-        result = prefix
-        i = 0
-
-        enquanto i < 60:
-            result += charset[aleatorio.inteiro(0, 15)]
-            i += 1
-
-        retorne result
+        retorne nulo
